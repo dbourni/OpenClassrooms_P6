@@ -93,6 +93,9 @@
     "doctrine/reflection": {
         "version": "v1.0.0"
     },
+    "egulias/email-validator": {
+        "version": "2.1.7"
+    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
@@ -128,6 +131,9 @@
         "files": [
             "./config/packages/sensio_framework_extra.yaml"
         ]
+    },
+    "swiftmailer/swiftmailer": {
+        "version": "v6.2.0"
     },
     "symfony/cache": {
         "version": "v4.2.5"
@@ -184,6 +190,9 @@
             "./.env"
         ]
     },
+    "symfony/form": {
+        "version": "v4.2.5"
+    },
     "symfony/framework-bundle": {
         "version": "4.2",
         "recipe": {
@@ -212,6 +221,9 @@
     "symfony/inflector": {
         "version": "v4.2.5"
     },
+    "symfony/intl": {
+        "version": "v4.2.5"
+    },
     "symfony/maker-bundle": {
         "version": "1.0",
         "recipe": {
@@ -221,8 +233,17 @@
             "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
         }
     },
+    "symfony/options-resolver": {
+        "version": "v4.2.5"
+    },
     "symfony/orm-pack": {
         "version": "v1.0.6"
+    },
+    "symfony/polyfill-intl-icu": {
+        "version": "v1.11.0"
+    },
+    "symfony/polyfill-intl-idn": {
+        "version": "v1.11.0"
     },
     "symfony/polyfill-mbstring": {
         "version": "v1.11.0"
@@ -281,6 +302,20 @@
     "symfony/stopwatch": {
         "version": "v4.2.5"
     },
+    "symfony/swiftmailer-bundle": {
+        "version": "2.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "2.5",
+            "ref": "3db029c03e452b4a23f7fc45cec7c922c2247eb8"
+        },
+        "files": [
+            "./config/packages/dev/swiftmailer.yaml",
+            "./config/packages/swiftmailer.yaml",
+            "./config/packages/test/swiftmailer.yaml"
+        ]
+    },
     "symfony/twig-bridge": {
         "version": "v4.2.5"
     },
@@ -296,6 +331,19 @@
             "./config/packages/twig.yaml",
             "./config/routes/dev/twig.yaml",
             "./templates/base.html.twig"
+        ]
+    },
+    "symfony/validator": {
+        "version": "4.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.1",
+            "ref": "9a285e4ff3915c7cd086e9945f30591a926baf83"
+        },
+        "files": [
+            "./config/packages/test/validator.yaml",
+            "./config/packages/validator.yaml"
         ]
     },
     "symfony/var-dumper": {

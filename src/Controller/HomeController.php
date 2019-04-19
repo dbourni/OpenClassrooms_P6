@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController
 {
     /**
-     * @Route("/", name="home")
+     * @Route("/")
      */
     public function home()
     {

@@ -39,7 +39,7 @@ class UserFixtures extends Fixture
             // $userData = [$password, $email, $roles];
             ['evdbevdb', 'david@bournisien.net', ['ROLE_ADMIN']],
             ['admin', 'admin@admin.com', ['ROLE_ADMIN']],
-            ['user', 'user@user.com', ['ROLE_USER']],
+            ['user', 'user@user.com', ['ROLE_REGISTERED_USER']],
         ];
     }
 }

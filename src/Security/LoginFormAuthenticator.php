@@ -71,6 +71,11 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
             throw new CustomUserMessageAuthenticationException('Email could not be found.');
         }
 
+        //Check if the account is validated or not
+        if ($user->getRoles() == []) {
+            throw new CustomUserMessageAuthenticationException('Compte non validé.');
+        }
+
         return $user;
     }
 
