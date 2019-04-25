@@ -1,0 +1,9 @@
+<h3>Nous vous remercions pour votre inscription</h3>
+
+<p>Vous êtes désormais inscrit(e) avec votre adresse {{ email }}</br>
+    mais ce compte n'est pas encore validé.</p>
+
+<p>Pour valider votre compte veuillez cliquer sur le lien ci-dessous :</br>
+    <a href="{{ url('app_security_registervalidation') }}?initCode={{ initCode }}">Valider mon compte</a>.</p>
+
+<p>Merci !</p>
