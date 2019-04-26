@@ -1,0 +1,72 @@
+{% extends 'backoffice_layout.html.twig' %}
+
+{% block content %}
+    <header>
+        <h1>Liste des utilisateurs</h1>
+    </header>
+
+    <div class="container">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Email</th>
+                        <th scope="col">Role</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <td>{{ user.email }}</td>
+                            <td>
+                                {% for role in user.roles %}
+                                    {{ role }}
+                                {% endfor %}
+                            </td>
+                            <td>
+                                <a href="{{ path('app_user_edit', {id:user.id}) }}" class="userbtn"><i class="fas fa-edit"></i></a>
+                                <a href="#" class="userbtn" data-toggle="modal" data-target="#deleteModal" data-path="{{ path('app_user_delete', {id:user.id}) }}"><i class="fas fa-trash-alt"></i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Supression d'un utilisateur</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Confirmez-vous la suppression de l'utilisateur ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <a href="delete" type="button" class="btn btn-primary">Supprimer</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    {{ parent() }}
+    <script>
+        $(function(){
+            $('#deleteModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var path = button.data('path');
+                var modal = $(this);
+                modal.find('a').attr("href",path);
+            })
+        })
+    </script>
+{% endblock %}
