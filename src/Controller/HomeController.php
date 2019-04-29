@@ -1,7 +1,4 @@
 <?php
-/**
- *
- */
 
 namespace App\Controller;
 
@@ -14,22 +11,22 @@ class HomeController
     /**
      * @Route("/")
      *
-     * @Template("home/home.html.twig")
+     * @Template()
      */
     public function home()
     {
-        return array();
+        return [];
     }
 
     /**
      * @Route("/backoffice")
      *
-     * @Template("home/backoffice.html.twig")
+     * @Template()
      *
      * @IsGranted("ROLE_ADMIN", message="Vous n'avez pas les droits d'accès.")
      */
     public function backoffice()
     {
-        return array();
+        return [];
     }
 }

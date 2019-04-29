@@ -20,7 +20,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/login")
      *
-     * @Template("security/login.html.twig")
+     * @Template()
      */
     public function login(Request $request, AuthenticationUtils $authenticationUtils)
     {
@@ -33,9 +33,7 @@ class SecurityController extends AbstractController
         $form = $this->createForm(LoginFormType::class, $defaultData);
         $form->handleRequest($request);
 
-        return array('loginForm' => $form->createView(), 'last_username' => $lastUsername, 'error' => $error,);
-
-        //return array('last_username' => $lastUsername, 'error' => $error);
+        return ['loginForm' => $form->createView(), 'last_username' => $lastUsername, 'error' => $error,];
     }
 
     /**
@@ -49,7 +47,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/register")
      *
-     * @Template("security/register.html.twig")
+     * @Template()
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, \Swift_Mailer $mailer)
     {
@@ -89,7 +87,7 @@ class SecurityController extends AbstractController
             return $this->redirectToRoute('app_security_login');
         }
 
-        return array('registrationForm' => $form->createView());
+        return ['registrationForm' => $form->createView()];
     }
 
     /**
@@ -122,7 +120,7 @@ class SecurityController extends AbstractController
      *
      * @Route("/resetPassword")
      *
-     * @Template("security/resetPassword.html.twig")
+     * @Template()
      */
     public function resetPassword(Request $request, \Swift_Mailer $mailer)
     {
@@ -163,7 +161,7 @@ class SecurityController extends AbstractController
             return $this->redirectToRoute('app_security_login');
         }
 
-        return array('resetPasswordForm' => $form->createView());
+        return ['resetPasswordForm' => $form->createView()];
     }
 
     /**
@@ -171,7 +169,7 @@ class SecurityController extends AbstractController
      *
      * @Route("/newPassword")
      *
-     * @Template("security/newPassword.html.twig")
+     * @Template()
      */
     public function newPassword(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
@@ -204,6 +202,6 @@ class SecurityController extends AbstractController
             $error = 'Le code de sécurité ou le mot de passe est erroné !';
         }
 
-        return array('newPasswordForm' => $form->createView(), 'error' => $error,);
+        return ['newPasswordForm' => $form->createView(), 'error' => $error,];
     }
 }

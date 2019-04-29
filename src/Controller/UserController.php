@@ -1,7 +1,4 @@
 <?php
-/**
- *
- */
 
 namespace App\Controller;
 
@@ -18,6 +15,8 @@ use Symfony\Component\Routing\Annotation\Route;
  * Class UserController
  * @package App\Controller
  *
+ * @Route("/user")
+ *
  * @IsGranted("ROLE_ADMIN", message="Vous n'avez pas les droits d'accès.")
  */
 class UserController extends AbstractController
@@ -25,17 +24,16 @@ class UserController extends AbstractController
     /**
      * @return array
      *
-     * @Route("/userlist")
+     * @Route("/list")
      *
-     * @Template("user/list.html.twig")
+     * @Template()
      */
     public function list()
     {
-        $users = $this->getDoctrine()
+        return ['users' => $this->getDoctrine()
             ->getRepository(User::class)
-            ->findAll();
-
-        return array('users' => $users);
+            ->findAll()]
+            ;
     }
 
     /**
@@ -44,29 +42,24 @@ class UserController extends AbstractController
      *
      * @return array|Response
      *
-     * @Route("/useredit/{id}")
+     * @Route("/edit/{id}")
      *
-     * @Template("user/edit.html.twig")
+     * @Template()
      */
-    public function edit(Request $request, $id)
+    public function edit(Request $request, User $user)
     {
-        $user = $this->getDoctrine()
-            ->getRepository(User::class)
-            ->find($id);
-
         $form = $this->createForm(EditUserFormType::class, $user);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_user_list');
         }
 
-        return array('form' => $form->createView(), 'title' => 'Edition d\'un utilisateur');
+        return ['form' => $form->createView(), 'title' => 'Edition d\'un utilisateur'];
     }
 
     /**
@@ -74,14 +67,10 @@ class UserController extends AbstractController
      *
      * @return Response
      *
-     * @Route("/userdelete/{id}")
+     * @Route("/delete/{id}")
      */
-    public function delete($id)
+    public function delete(User $user)
     {
-        $user = $this->getDoctrine()
-            ->getRepository(User::class)
-            ->find($id);
-
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($user);
         $entityManager->flush();
