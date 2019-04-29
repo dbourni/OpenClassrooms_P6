@@ -1,22 +1,32 @@
 <?php
-/**
- *
- */
 
 namespace App\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController
 {
     /**
      * @Route("/")
+     *
+     * @Template()
      */
     public function home()
     {
-        return new Response(
-            '<html><body>Homepage.</body></html>'
-        );
+        return [];
+    }
+
+    /**
+     * @Route("/backoffice")
+     *
+     * @Template()
+     *
+     * @IsGranted("ROLE_ADMIN", message="Vous n'avez pas les droits d'accès.")
+     */
+    public function backoffice()
+    {
+        return [];
     }
 }

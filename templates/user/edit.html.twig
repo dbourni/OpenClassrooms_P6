@@ -1,0 +1,21 @@
+{% extends 'backoffice_layout.html.twig' %}
+
+{% block title %}Backoffice{% endblock %}
+
+{% block content %}
+    <header>
+        <h1>{{ title }}</h1>
+    </header>
+
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-md-5">
+                {{ form_start(form) }}
+                {{ form_row(form.email) }}
+                {{ form_row(form.roles) }}
+                {{ form_row(form.save) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

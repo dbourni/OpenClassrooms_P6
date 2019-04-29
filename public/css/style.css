@@ -1,0 +1,49 @@
+body {
+    padding-top: 90px;
+  }
+  
+  #mainNav {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    font-weight: 700;
+    background-color: #2C3E50;
+  }
+  
+  #mainNav .navbar-brand {
+    color: #fff;
+    letter-spacing: 0.15rem;
+    font-size: 1.5em;
+  }
+  
+  #mainNav .navbar-nav {
+    margin-top: 1rem;
+    letter-spacing: 0.1rem;
+    font-size: 1.3em;
+  }
+  
+  #mainNav .navbar-nav li.nav-item a.nav-link {
+    color: #fff;
+  }
+  
+  #mainNav .navbar-nav li.nav-item a.nav-link:hover {
+    color: #18BC9C;
+  }
+  
+  #mainNav .navbar-nav li.nav-item a.nav-link:active, #mainNav .navbar-nav li.nav-item a.nav-link:focus {
+    color: #fff;
+  }
+  
+  #mainNav .navbar-nav li.nav-item a.nav-link.active {
+    color: #18BC9C;
+  }
+
+  header h1 {
+    padding-top: 1em;
+    padding-bottom: 1em;
+    font-size: 2em;
+    text-align: center;
+  }
+
+  .userbtn {
+    padding-right: 25px;
+  }
