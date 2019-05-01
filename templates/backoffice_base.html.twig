@@ -34,12 +34,31 @@
               <a class="nav-link" href="{{ path('app_user_list') }}">Utilisateurs</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" href="{{ path('app_figure_list') }}">Figures</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="#">Commentaires</a>
             </li>
           </ul>
         </div>
       </div>
     </nav>
+
+    <!-- *** Displays the flash messages *** -->
+    <div class="container" id="container-alert">
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="row d-flex justify-content-center">
+                  <div class="alert-{{ label }} col-8 alert alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
 
     <!-- *** Content *** -->
     {% block content %}{% endblock %}

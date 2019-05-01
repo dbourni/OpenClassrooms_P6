@@ -2,36 +2,36 @@
 
 {% block content %}
     <header>
-        <h1>Liste des utilisateurs</h1>
+        <h1>Liste des figures</h1>
     </header>
 
     <div class="container">
         <div class="table-responsive">
             <table class="table table-hover">
                 <thead>
-                    <tr>
-                        <th scope="col">Email</th>
-                        <th scope="col">Role</th>
-                        <th scope="col"></th>
-                    </tr>
+                <tr>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Groupe</th>
+                    <th scope="col"></th>
+                </tr>
                 </thead>
                 <tbody>
-                    {% for user in users %}
-                        <tr>
-                            <td>{{ user.email }}</td>
-                            <td>
-                                {% for role in user.roles %}
-                                    {{ role }}
-                                {% endfor %}
-                            </td>
-                            <td>
-                                <a href="{{ path('app_user_edit', {id:user.id}) }}" class="userbtn"><i class="fas fa-edit"></i></a>
-                                <a href="#" class="userbtn" data-toggle="modal" data-target="#deleteModal" data-path="{{ path('app_user_delete', {id:user.id}) }}"><i class="fas fa-trash-alt"></i></a>
-                            </td>
-                        </tr>
-                    {% endfor %}
+                {% for figure in figures %}
+                    <tr>
+                        <td>{{ figure.name }}</td>
+                        <td>{{ figure.grp.name }}</td>
+                        <td>
+                            <a href="{{ path('app_figure_view', {id:figure.id}) }}" class="userbtn"><i class="far fa-eye"></i></a>
+                            <a href="{{ path('app_figure_edit', {id:figure.id}) }}" class="userbtn"><i class="fas fa-edit"></i></a>
+                            <a href="#" class="userbtn" data-toggle="modal" data-target="#deleteModal" data-path="{{ path('app_figure_delete', {id:figure.id}) }}"><i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                {% endfor %}
                 </tbody>
             </table>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <a href="{{ path('app_figure_new') }}" type="button" class="btn btn-primary">Nouvelle figure</a>
         </div>
     </div>
 
@@ -40,13 +40,13 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Supression d'un utilisateur</h5>
+                    <h5 class="modal-title">Supression d'une figure</h5>
                     <button type="button" class="close" data-dismiss="modal">
                         <span>&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    Confirmez-vous la suppression de l'utilisateur ?
+                    Confirmez-vous la suppression de la figure ?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
