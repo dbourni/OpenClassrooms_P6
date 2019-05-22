@@ -10,6 +10,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class UserFixtures extends Fixture
 {
     private $passwordEncoder;
+    public const USER_DBOURNI = 'david@bournisien.net';
 
     public function __construct(UserPasswordEncoderInterface $passwordEncoder)
     {
@@ -18,16 +19,16 @@ class UserFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        // $product = new Product();
-        // $manager->persist($product);
         foreach ($this->getUserData() as [$password, $email, $roles]) {
             $user = new User();
             $user->setPassword($this->passwordEncoder->encodePassword($user, $password));
             $user->setEmail($email);
             $user->setRoles($roles);
-
             $manager->persist($user);
-            //$this->addReference($username, $user);
+
+            if ($email == 'david@bournisien.net') {
+                $this->addReference(self::USER_DBOURNI, $user);
+            }
         }
 
         $manager->flush();

@@ -1,0 +1,117 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle figure{% endblock %}
+
+{% block content %}
+
+    <main>
+        <div class="row justify-content-md-center">
+            <div id="trick_main_image" class="col-lg-8 d-flex align-items-center justify-content-center"
+                 style="background: url('/img/placeholder.jpg') center">
+                <h1 id="trick-new-title">Nouvelle figure</h1>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-8" id="trick_content" >
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        {{ form_start(form) }}
+                        {{ form_row(form.name) }}
+                        {{ form_row(form.description) }}
+                        <div class="row">
+                            <div class="col-6">
+                                {{ form_row(form.grp) }}
+                            </div>
+                        </div>
+
+                        <ul id="pictures-list" class="trick-ul"
+                            data-prototype="{{ form_widget(form.pictures.vars.prototype)|e }}"
+                            data-widget-tags="{{ '<li></li>'|e }}"
+                            data-widget-counter="{{ form.children|length }}">
+
+                            {% for picture in form.pictures %}
+                                <li>
+                                    {{ form_errors(picture) }}
+                                    {{ form_widget(picture) }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+
+                        <ul id="videos-list" class="trick-ul"
+                            data-prototype="{{ form_widget(form.videos.vars.prototype)|e }}"
+                            data-widget-tags="{{ '<li></li>'|e }}"
+                            data-widget-counter="{{ form.children|length }}">
+
+                            {% for video in form.videos %}
+                                <li>
+                                    {{ form_errors(video) }}
+                                    {{ form_widget(video) }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+
+                        {# Buttons #}
+                        <div class="row justify-content-center">
+                            <div class="col-12 text-right trick-btn">
+                                <button class="btn btn-primary" type="submit">Enregistrer</button>
+                            </div>
+                        </div>
+
+                        <div class="row justify-content-center">
+                            <div class="col-12 text-right trick-btn">
+                                <a href="{{ path('app_figure_list') }}" class="btn btn-primary">Annuler</a>
+                                <button type="button"
+                                        class="add-another-collection-widget btn btn-primary"
+                                        data-list-selector="#pictures-list">+ image</button>
+                                <button type="button"
+                                        class="add-another-collection-widget btn btn-primary"
+                                        data-list-selector="#videos-list">+ vidéo</button>
+                            </div>
+                        </div>
+
+                        {{ form_end(form) }}
+
+{#                        <a href="{{ path('app_figure_list') }}" class="btn btn-primary">Annuler</a>#}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{#<script src="/js/add-collection-widget.js"></script>#}
+<script>
+
+    jQuery(document).ready(function () {
+        jQuery('.add-another-collection-widget').click(function (e) {
+            var list = jQuery(jQuery(this).attr('data-list-selector'));
+            // Try to find the counter of the list or use the length of the list
+            var counter = list.data('widget-counter') | list.children().length;
+
+            // grab the prototype template
+            var newWidget = list.attr('data-prototype');
+            // replace the "__name__" used in the id and name of the prototype
+            // with a number that's unique to your emails
+            // end name attribute looks like name="contact[emails][2]"
+            newWidget = newWidget.replace(/__name__/g, counter);
+            // Increase the counter
+            counter++;
+            // And store it, the length cannot be used if deleting widgets is allowed
+            list.data('widget-counter', counter);
+
+            // create a new list element and add it to the list
+            var newElem = jQuery(list.attr('data-widget-tags')).html(newWidget);
+            newElem.appendTo(list);
+        });
+    });
+
+    function removeWidget(widget) {
+        widget.parent().parent().parent().remove();
+    }
+    </script>
+
+{% endblock %}

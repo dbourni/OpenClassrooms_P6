@@ -1,0 +1,267 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edition de {{ figure.name }}{% endblock %}
+
+{% block content %}
+
+    <main>
+        {{ form_start(form) }}
+
+        {# Main image #}
+        <div class="row justify-content-md-center">
+            {% set mainPicture = '/img/placeholder.jpg' %}
+            {% for picture in form.pictures %}
+                {% if picture.vars.data.isMainPicture == 1 %}
+                    {% set mainPicture = asset('uploads/' ~ picture.vars.data.path) %}
+                {% endif %}
+            {% endfor %}
+            <div id="trick_main_image" class="col-lg-8" style="background: url({{ mainPicture }}) center">
+                <div class="row">
+                    <p class="col-12 align-text-top">
+                        <i class="fas fa-edit" data-toggle="modal" data-target="#editMainPictureModal"></i>
+                    </p>
+                </div>
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-center align-items-center" id="trick-edit-title">
+                        <h1>{{ figure.name }}</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {# Pictures and videos #}
+        <div class="row justify-content-center">
+            <div class="col-lg-8" id="trick_content" >
+
+                <div class="row justify-content-center d-md-none" id="seeMedia">
+                    <p class="btn btn-primary">Voir les médias</p>
+                </div>
+
+                <div class="row justify-content-center pictures-row d-none d-md-block" id="trick-Media">
+                    <div class="col-12">
+
+                        <ul id="pictures-list" class="trick-ul"
+                            data-prototype="{{ form_widget(form.pictures.vars.prototype)|e }}"
+                            data-widget-tags="{{ '<div class="row justify-content-center" id="image"></div>'|e }}"
+                            data-widget-counter="{{ form.children|length }}">
+
+                        <ul id="videos-list"
+                            data-prototype="{{ form_widget(form.videos.vars.prototype)|e }}"
+                            data-widget-tags="{{ '<div class="row justify-content-center"  id="video"></div>'|e }}"
+                            data-widget-counter="{{ form.children|length }}">
+
+                            <div class="row justify-content-center pictures-row">
+
+                                {% for picture in form.pictures %}
+                                    <div class="col-lg-2 col-md-3 col-sm-4 trick-list">
+                                        <div class="row justify-content-center" id="image">
+                                            <div class="col-12 trick-img-thumbnail" style="background-image: url('{{ asset('uploads/' ~ picture.vars.data.path) }}')">
+                                                <li class="trick-li">
+                                                    {{ form_errors(picture) }}
+                                                    {{ form_widget(picture) }}
+                                                </li>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <p class="trick-img-buttons">
+                                                    {% if picture.vars.data.isMainPicture == 1 %}
+                                                        <i class="fas fa-star" id="mainPictureStar_{{loop.index0}}" onclick="editMainPicture({{loop.index0}})"></i>
+                                                    {% else %}
+                                                        <i class="far fa-star" id="mainPictureStar_{{loop.index0}}" onclick="editMainPicture({{loop.index0}})"></i>
+                                                    {% endif %}
+                                                    <i class="fas fa-edit" onclick="editPicture({{loop.index0}})"></i>
+                                                    <i class="fas fa-trash" onclick="removeWidget($(this))"></i>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                                {% for video in form.videos %}
+                                    <div class="col-lg-2 col-md-3 col-sm-4 trick-list">
+                                        <div class="row justify-content-center"  id="video">
+                                            <div class="col-12 trick-img-thumbnail">
+                                                <div id="video_{{loop.index0}}"class="trick-video-thumbnails embed-responsive embed-responsive-16by9">
+                                                    <iframe class="embed-responsive-item" src="{{ video.vars.data.url }}" allowfullscreen></iframe>
+                                                </div>
+                                                <li class="trick-li">
+                                                    {{ form_errors(video) }}
+                                                    {{ form_widget(video) }}
+                                                </li>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <p class="trick-img-buttons"><i class="fas fa-edit" onclick="editVideo({{loop.index0}})"></i> <i class="fas fa-trash" onclick="removeWidget($(this))"></i></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </ul>
+                        </ul>
+                    </div>
+                </div>
+
+                {# Trick fields #}
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        {{ form_row(form.name) }}
+                        {{ form_row(form.description) }}
+                        <div class="row">
+                            <div class="col-6">
+                                {{ form_row(form.grp) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {# Buttons #}
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 text-right trick-btn">
+                        <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal"
+                           data-path="{{ path('app_figure_delete', {id:figure.id}) }}">Supprimer</a>
+                        <button class="btn btn-primary" type="submit">Enregistrer</button>
+                    </div>
+                </div>
+
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 text-right trick-btn">
+                        <a href="{{ path('app_figure_list') }}" class="btn btn-primary">Annuler</a>
+                        <button type="button"
+                                class="add-another-collection-widget btn btn-primary"
+                                data-list-selector="#pictures-list">+ image</button>
+                        <button type="button"
+                                class="add-another-collection-widget btn btn-primary"
+                                data-list-selector="#videos-list">+ vidéo</button>
+                    </div>
+                </div>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </main>
+
+    {# Modal for delete #}
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Supression d'une figure</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Confirmez-vous la suppression de la figure ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <a href="delete" type="button" class="btn btn-primary">Supprimer</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Modal for editMainPicture #}
+    <div class="modal fade" id="editMainPictureModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modification</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Pour sélectionner l'image principale, cliquez sur l'étoile <i class="fas fa-star"></i> de votre choix dans la liste des images.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {#<script src="/js/add-collection-widget.js"></script>#}
+    <script>
+
+        jQuery(document).ready(function () {
+            $("li div").hide();
+            jQuery('.add-another-collection-widget').click(function (e) {
+                var list = jQuery(jQuery(this).attr('data-list-selector'));
+                // Try to find the counter of the list or use the length of the list
+                var counter = list.data('widget-counter') | list.children().length;
+
+                // grab the prototype template
+                var newWidget = list.attr('data-prototype');
+                // replace the "__name__" used in the id and name of the prototype
+                // with a number that's unique to your emails
+                // end name attribute looks like name="contact[emails][2]"
+                newWidget = newWidget.replace(/__name__/g, counter);
+                // Increase the counter
+                counter++;
+                // And store it, the length cannot be used if deleting widgets is allowed
+                list.data('widget-counter', counter);
+
+                // create a new list element and add it to the list
+                var newElem = jQuery(list.attr('data-widget-tags')).html(newWidget);
+                newElem.appendTo(list);
+            });
+            $(".form-check-input").click(function () {
+                $("input:radio").prop('checked', 0);
+                $(this).prop('checked', 'checked');
+            });
+        });
+
+        function removeWidget(widget) {
+            widget.parent().parent().parent().parent().remove();
+        }
+
+        function editPicture(id) {
+            $("li div#figure_form_pictures_"+ id).show();
+            $("li div#figure_form_pictures_"+ id +" div.form-group").show();
+            $("li div#figure_form_pictures_"+ id +" div div.custom-file").show();
+        }
+
+        function editVideo(id) {
+            $("div#video_"+ id).hide();
+            $("li div#figure_form_videos_"+ id).show();
+            $("li div#figure_form_videos_"+ id +" div.form-group").show();
+            // $("li div#figure_form_videos_"+ id +" div input").show();
+        }
+
+        function editMainPicture(id) {
+            $("input:radio").prop('checked', 0);
+            $("#figure_form_pictures_" + id + "_isMainPicture").prop('checked', 'checked');
+            $(".fas.fa-star").removeClass("fas").addClass("far");
+            $("#mainPictureStar_"+id).removeClass("far fa-star").addClass("fas fa-star");
+        }
+
+        $("#seeMedia").click(function() {
+            $("#trick-Media").removeClass("d-none d-md-block");
+            $("#seeMedia").hide();
+        });
+
+        // function selectMainPicture(id) {
+        //     $("input:radio").prop('checked', 0);
+        //     // $("#figure_form_pictures_" + id + "_isMainPicture").prop('checked', 'checked');
+        //     $(this).prop('checked', 'checked');
+        //     // alert("via function");
+        // }
+
+        $(function(){
+            $('#deleteModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var path = button.data('path');
+                var modal = $(this);
+                modal.find('a').attr("href",path);
+            })
+        })
+    </script>
+
+{% endblock %}

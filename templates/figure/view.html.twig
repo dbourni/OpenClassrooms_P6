@@ -1,0 +1,117 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Figure {{ figure.name }}{% endblock %}
+
+{% block content %}
+    <main>
+        {# Main image #}
+        <div class="row justify-content-md-center">
+            {% set mainPicture = '/img/placeholder.jpg' %}
+            {% for picture in figure.pictures %}
+                {% if picture.isMainPicture == 1 %}
+                    {% set mainPicture = asset('uploads/' ~ picture.path) %}
+                {% endif %}
+            {% endfor %}
+            <div id="trick_main_image" class="col-lg-8" style="background: url({{ mainPicture }}) center">
+                {% if app.user %}
+                    <div class="row">
+                        <p class="col-12 align-text-top">
+                            <a href="{{ path('app_figure_edit', {id:figure.id}) }}"><i class="fas fa-edit"></i></a>
+                            <i class="fas fa-trash" data-toggle="modal" data-target="#deleteModal"></i>
+                        </p>
+                    </div>
+                {% endif %}
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-center align-items-center" id="trick-edit-title">
+                        <h1>{{ figure.name }}</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {# Pictures and videos #}
+        <div class="row justify-content-center">
+            <div class="col-lg-8" id="trick_content" >
+
+                <div class="row justify-content-center d-md-none" id="seeMedia">
+                    <p class="btn btn-primary">Voir les médias</p>
+                </div>
+
+                <div class="row justify-content-center pictures-row d-none d-md-block" id="trick-Media">
+                    <div class="col-12">
+                        <div class="row justify-content-center pictures-row">
+                            {% for picture in figure.pictures %}
+                                <div class="col-lg-2 col-md-3 col-sm-4 trick-list">
+                                    <div class="row justify-content-center" id="image">
+                                        <div class="col-12 trick-img-thumbnail" style="background-image: url('{{ asset('uploads/' ~ picture.path) }}')">
+                                        </div>
+                                    </div>
+                                    <div class="container row">
+                                        <a href="{{ asset('uploads/' ~ picture.path) }}" class="userbtn" target="_blank"><i class="far fa-eye"></i></a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            {% for video in figure.videos %}
+                                <div class="col-lg-2 col-md-3 col-sm-4 trick-list">
+                                    <div class="row justify-content-center"  id="video">
+                                        <div class="col-12 trick-img-thumbnail">
+                                            <div id="video_{{loop.index0}}"class="trick-video-thumbnails embed-responsive embed-responsive-16by9">
+                                                <iframe class="embed-responsive-item" src="{{ video.url }}" allowfullscreen></iframe>
+                                            </div>
+                                        </div>
+                                        <div class="container row">
+                                            <a href="{{ video.url }}" class="userbtn" target="_blank"><i class="far fa-eye"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                {# Trick fields #}
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        {{ figure.description }}
+                        <p></p>
+                        <p class="text-center">
+                            <b>Groupe :</b> {{ figure.grp.name }} -
+                            <b>Date de création :</b> {{ figure.createdAt | date("d/m/Y") }} -
+                            <b>Créateur :</b> {{ app.user.email | replace({'@': '(at)'}) }}</p>
+                        <hr>
+                    </div>
+                </div>
+    </main>
+
+    {# Modal for delete #}
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Supression d'une figure</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Confirmez-vous la suppression de la figure ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <a href="{{ path('app_figure_delete', {id:figure.id}) }}" type="button" class="btn btn-primary">Supprimer</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        $("#seeMedia").click(function() {
+            $("#trick-Media").removeClass("d-none d-md-block");
+            $("#seeMedia").hide();
+        });
+    </script>
+{% endblock %}

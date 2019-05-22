@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\user\EditUserFormType;
+use App\Form\user\UserFormType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -48,7 +48,7 @@ class UserController extends AbstractController
      */
     public function edit(Request $request, User $user)
     {
-        $form = $this->createForm(EditUserFormType::class, $user);
+        $form = $this->createForm(UserFormType::class, $user);
 
         $form->handleRequest($request);
 
