@@ -28,21 +28,20 @@
                 </div>
             </header>
 
-            <div class="container justify-content-center" id="container-alert">
-                <div class="container" id="container-alert">
-                    {% for label, messages in app.flashes %}
-                        {% for message in messages %}
-                            <div class="row d-flex justify-content-center">
-                                <div class="alert-{{ label }} col-8 alert alert-dismissible fade show" role="alert">
-                                    {{ message }}
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
+            <!-- *** Displays the flash messages *** -->
+            <div class="container" id="container-alert">
+                {% for label, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class="row d-flex justify-content-center">
+                            <div class="alert-{{ label }} col-8 alert alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
-                        {% endfor %}
+                        </div>
                     {% endfor %}
-                </div>
+                {% endfor %}
             </div>
 
             {% block content %}{% endblock %}
