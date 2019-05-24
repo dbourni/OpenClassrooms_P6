@@ -1,0 +1,18 @@
+{% for comment in figure.comments | slice(start,start+5) %}
+    <div class="row row-comment">
+        <div class="col-1">
+            <i class="fas fa-user-edit fa-2x"></i>
+        </div>
+        <div class="col-11">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">
+                        {{ comment.user.email | replace({'@': '(at)'}) }}
+                        a écrit le {{ comment.createdAt | date("d/m/Y à H:m") }}
+                    </h6>
+                    <p class="card-text">{{ comment.content|raw }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}

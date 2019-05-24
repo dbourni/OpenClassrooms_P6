@@ -2,9 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Figure;
 use App\Entity\Picture;
+use App\Form\figure\CommentFormType;
 use App\Form\figure\FigureFormType;
+use App\Repository\FigureRepository;
+use Doctrine\Common\Persistence\ObjectManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -75,15 +79,43 @@ class FigureController extends AbstractController
     /**
      * @param Figure $figure
      *
-     * @return array
+     * @return array|Response
      *
      * @Route("/view/{id}")
      *
      * @Template()
      */
-    public function view(Figure $figure)
+    public function view(Figure $figure, Request $request)
     {
-        return ['figure' => $figure];
+        $comment = new Comment();
+        $form = $this->createForm(CommentFormType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $comment->setUser($this->getUser());
+            $comment->setCreatedAt(new \DateTime());
+            $comment->setFigure($figure);
+            $entityManager->persist($comment);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_figure_view', ['id' => $figure->getId()]);
+        }
+
+        return ['figure' => $figure, 'form' => $form->createView()];
+    }
+
+    /**
+     * @param int $start
+     * @return array
+     *
+     * @Route("/morecomments/{id}/{start}")
+     *
+     * @Template()
+     */
+    public function moreComments(Figure $figure, $start = 5)
+    {
+        return ['figure' => $figure, 'start' => $start];
     }
 
     /**

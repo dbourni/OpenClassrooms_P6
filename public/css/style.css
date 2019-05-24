@@ -46,7 +46,7 @@ footer {
 }
 
 main {
-  padding-top: 3em;
+  padding-top: 1em;
 }
 
 #trick_main_image {
@@ -119,7 +119,6 @@ main {
 
 .trick-ul {
   list-style: none;
-  /*display: inline-block;*/
 }
 
 .trick-img {
@@ -144,10 +143,8 @@ main {
 }
 
 .trick-video-thumbnails {
-  /*margin-left: -15px;*/
   margin-top: 10px;
   max-height: 100px;
-  /*width: 179px;*/
 }
 
 .trick-btn {
@@ -189,4 +186,16 @@ ul {
     border-width: 1px;
     padding-top: 1em;
     padding-bottom: 1em;
+  }
+
+  .row-comment {
+    padding-bottom: 10px;
+  }
+
+  h6 {
+    font-size: 12px;
+  }
+
+  .fa-edit, .fa-trash, .fa-star {
+    color: dodgerblue;
   }
