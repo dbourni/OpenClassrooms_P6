@@ -69,10 +69,11 @@ class UserController extends AbstractController
      *
      * @Route("/delete/{id}")
      */
-    public function delete(User $user)
+    public function delete(User $id)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($user);
+        $entityManager->remove($id);
+        $entityManager->remove($id);
         $entityManager->flush();
 
         return $this->redirectToRoute('app_user_list');

@@ -34,6 +34,7 @@ class Figure
      *     mappedBy="figure",
      *     orphanRemoval=true,
      *     cascade={"persist", "remove"})
+     * @Assert\Valid()
      */
     private $pictures;
 
@@ -42,6 +43,7 @@ class Figure
      *     mappedBy="figure",
      *     orphanRemoval=true,
      *     cascade={"persist", "remove"})
+     * @Assert\Valid()
      */
     private $videos;
 
@@ -115,8 +117,10 @@ class Figure
     public function addPicture(Picture $picture): self
     {
         if (!$this->pictures->contains($picture)) {
-            $this->pictures[] = $picture;
-            $picture->setFigure($this);
+            if (!$picture->getFile() == null) {
+                $this->pictures[] = $picture;
+                $picture->setFigure($this);
+            }
         }
 
         return $this;

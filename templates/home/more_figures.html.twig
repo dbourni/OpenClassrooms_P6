@@ -1,0 +1,28 @@
+{% for figure in figures | reverse | slice(start,start+15) %}
+    <div class="col-lg-2 col-md-3 col-sm-4 trick-list">
+        <div class="row justify-content-center" id="image">
+            {% set mainPicture = '/img/placeholder.jpg' %}
+            {% for picture in figure.pictures %}
+                {% if picture.isMainPicture == 1 %}
+                    {% set mainPicture = asset('uploads/' ~ picture.path) %}
+                {% endif %}
+            {% endfor %}
+            <div class="col-12 trick-img-thumbnail" style="background-image: url({{ mainPicture }})">
+            </div>
+        </div>
+        <div class="row" id="trick-sub-thumbnail">
+            <div class="col-9 d-flex">
+                <a href="{{ path('app_figure_view', {id:figure.id}) }}">{{ figure.name }}</a>
+            </div>
+            {% if app.user %}
+                <div class="col-3 d-flex justify-content-end">
+                    <a href="{{ path('app_figure_edit', {id:figure.id}) }}"><i class="fas fa-edit"></i></a>
+                    <a href="#" data-toggle="modal" data-target="#deleteModal"
+                       data-path="{{ path('app_figure_delete', {id:figure.id}) }}">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endfor %}

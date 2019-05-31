@@ -23,7 +23,7 @@
                 {% endif %}
                 <div class="row">
                     <div class="col-12 d-flex justify-content-center align-items-center" id="trick-edit-title">
-                        <h1>{{ figure.name }}</h1>
+                        <h1  class="figureName">{{ figure.name }}</h1>
                     </div>
                 </div>
             </div>
@@ -41,7 +41,7 @@
                     <div class="col-12">
                         <div class="row justify-content-center pictures-row">
                             {% for picture in figure.pictures %}
-                                <div class="col-lg-2 col-md-3 col-sm-4 trick-list">
+                                <div class="col-lg-2 col-md-3 col-sm-6 col-6 trick-list">
                                     <div class="row justify-content-center" id="image">
                                         <div class="col-12 trick-img-thumbnail" style="background-image: url('{{ asset('uploads/' ~ picture.path) }}')">
                                         </div>
@@ -52,7 +52,7 @@
                                 </div>
                             {% endfor %}
                             {% for video in figure.videos %}
-                                <div class="col-lg-2 col-md-3 col-sm-4 trick-list">
+                                <div class="col-lg-2 col-md-3 col-sm-6 col-6 trick-list">
                                     <div class="row justify-content-center"  id="video">
                                         <div class="col-12 trick-img-thumbnail">
                                             <div id="video_{{loop.index0}}"class="trick-video-thumbnails embed-responsive embed-responsive-16by9">
@@ -77,7 +77,7 @@
                         <p class="text-center">
                             <b>Groupe :</b> {{ figure.grp.name }} -
                             <b>Date de création :</b> {{ figure.createdAt | date("d/m/Y") }} -
-                            <b>Créateur :</b> {{ app.user.email | replace({'@': '(at)'}) }}</p>
+                            <b>Créateur :</b> {{ figure.user.email | replace({'@': '(at)'}) }}</p>
                         <hr>
                     </div>
                 </div>
@@ -103,24 +103,24 @@
                     <div class="row justify-content-center">
                         <div class="col-8">
                             <section id="comments">
-                            {% for comment in figure.comments | slice(0,5) %}
-                                <div class="row row-comment">
-                                    <div class="col-1">
-                                        <i class="fas fa-user-edit fa-2x"></i>
-                                    </div>
-                                    <div class="col-11">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <h6 class="card-title">
-                                                    {{ comment.user.email | replace({'@': '(at)'}) }}
-                                                    a écrit le {{ comment.createdAt | date("d/m/Y à H:m") }}
-                                                </h6>
-                                                <p class="card-text">{{ comment.content|raw }}</p>
+                                {% for comment in figure.comments | slice(0,5) %}
+                                    <div class="row row-comment">
+                                        <div class="col-1">
+                                            <i class="fas fa-user-edit fa-2x"></i>
+                                        </div>
+                                        <div class="col-11">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <h6 class="card-title">
+                                                        {{ comment.user.email | replace({'@': '(at)'}) }}
+                                                        a écrit le {{ comment.createdAt | date("d/m/Y à H:m") }}
+                                                    </h6>
+                                                    <p class="card-text">{{ comment.content|raw }}</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            {% endfor %}
+                                {% endfor %}
                             </section>
                         </div>
                     </div>

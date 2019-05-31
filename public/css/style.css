@@ -1,6 +1,6 @@
 body {
-    padding-top: 1em;
-    padding-bottom: 1em;
+  padding-top: 5em;
+  padding-bottom: 60px;
   }
 
 header {
@@ -24,21 +24,19 @@ header {
 }
 
 #container-alert {
-  padding-top: 80px;
+  /*padding-top: 80px;*/
 }
 
-footer {
-  position: absolute;
+.main-footer {
+  position: fixed;
   bottom: 0;
-  padding-bottom: 1em;
-  left: 2em;
-  right: 2em;
-}
-
-#footer {
+  width: 100%;
+  height: 60px;
   border-top-style: solid;
+  border-color: #2C3E50;
   border-width: 2px;
-  padding-top: 1em;
+  background-color: white;
+  margin-left: 0;
 }
 
 #footer-copyright {
@@ -46,7 +44,7 @@ footer {
 }
 
 main {
-  padding-top: 1em;
+  padding-top: 2em;
 }
 
 #trick_main_image {
@@ -56,6 +54,7 @@ main {
   background-position: center;
   background-size: cover;
   border-style: solid;
+  border-color: #2C3E50;
   border-width: 1px;
 }
 
@@ -90,7 +89,7 @@ main {
 }
 
 #mainNav .navbar-nav li.nav-item a.nav-link:hover {
-  color: #18BC9C;
+  color: #1e90ff;
 }
 
 #mainNav .navbar-nav li.nav-item a.nav-link:active, #mainNav .navbar-nav li.nav-item a.nav-link:focus {
@@ -98,7 +97,12 @@ main {
 }
 
 #mainNav .navbar-nav li.nav-item a.nav-link.active {
-  color: #18BC9C;
+  color: #1e90ff;
+}
+
+.figureName {
+  font-size: 68px;
+  font-weight: bold;
 }
 
 .trick-list {
@@ -114,7 +118,7 @@ main {
 
 .trick-li {
    list-style: none;
-   display: inline-block;
+  /*display: inline-block;*/
 }
 
 .trick-ul {
@@ -138,6 +142,12 @@ main {
   background-position: center;
 }
 
+#trick-sub-thumbnail {
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
 .trick-img-buttons {
   text-align: right;
 }
@@ -157,11 +167,11 @@ main {
 
 #trick-edit-title {
   height: 300px;
-  color: dodgerblue;
+  color: #1e90ff;
 }
 
 #trick-new-title {
-  color: dodgerblue;
+  color: #1e90ff;
 }
 
 ul {
@@ -197,5 +207,23 @@ ul {
   }
 
   .fa-edit, .fa-trash, .fa-star {
-    color: dodgerblue;
+    color: #1e90ff;
+  }
+
+  #img-home {
+    background-image: url('/img/home.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    border-bottom: 2px solid black;
+  }
+
+  #row-slogan {
+    height: 30em;
+  }
+
+  #slogan-home {
+    color: darkred;
+    font-size: 46px;
+    font-weight: bold;
   }

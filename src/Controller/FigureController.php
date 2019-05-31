@@ -70,7 +70,7 @@ class FigureController extends AbstractController
 
             $this->addFlash('success', 'La figure a été créée avec succès.');
 
-            return $this->redirectToRoute('app_figure_list');
+            return $this->redirectToRoute('app_home_home');
         }
 
         return ['form' => $form->createView()];
@@ -142,7 +142,7 @@ class FigureController extends AbstractController
 
             $this->addFlash('success', 'La figure a été modifiée avec succès.');
 
-            return $this->redirectToRoute('app_figure_list');
+            return $this->redirectToRoute('app_home_home');
         }
 
         return ['form' => $form->createView(), 'figure' => $figure];
@@ -173,6 +173,6 @@ class FigureController extends AbstractController
 
         $this->addFlash('success', 'La figure a été supprimée avec succès.');
 
-        return $this->redirectToRoute('app_figure_list');
+        return $this->redirectToRoute('app_home_home');
     }
 }
