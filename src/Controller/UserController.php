@@ -38,7 +38,7 @@ class UserController extends AbstractController
 
     /**
      * @param Request $request
-     * @param $id
+     * @param User $id
      *
      * @return array|Response
      *
@@ -63,7 +63,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @param $id
+     * @param User $id
      *
      * @return Response
      *

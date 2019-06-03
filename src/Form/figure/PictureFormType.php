@@ -17,9 +17,6 @@ class PictureFormType extends AbstractType
         $builder
             ->add('file', FileType::class, [
                 'label' => false,
-//                'constraints' => array(
-//                    new File(),
-//                ),
                 'attr' => [
                     'placeholder' => 'Image'
                 ]

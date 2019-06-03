@@ -1,26 +1,26 @@
 body {
-  padding-top: 5em;
-  padding-bottom: 60px;
-  }
+    padding-top: 5em;
+padding-bottom: 60px;
+}
 
 header {
-  border-bottom-style: solid;
-  border-width: 2px;
+    border-bottom-style: solid;
+    border-width: 2px;
 }
 
 #header-title {
-  font-weight: 700;
-  font-size: x-large;
-  padding-bottom: 0.5em;
+    font-weight: 700;
+    font-size: x-large;
+    padding-bottom: 0.5em;
 }
 
 #header-menu {
-  font-size: large;
-  word-spacing: 1.5em;
-  text-align: right;
-  padding-right: 2em;
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
+    font-size: large;
+    word-spacing: 1.5em;
+    text-align: right;
+    padding-right: 2em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
 }
 
 #container-alert {
@@ -28,202 +28,209 @@ header {
 }
 
 .main-footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  height: 60px;
-  border-top-style: solid;
-  border-color: #2C3E50;
-  border-width: 2px;
-  background-color: white;
-  margin-left: 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    border-top-style: solid;
+    border-color: #2C3E50;
+    border-width: 2px;
+    background-color: white;
+    margin-left: 0;
 }
 
 #footer-copyright {
-  padding-left: 3em;
+    padding-left: 3em;
 }
 
 main {
-  padding-top: 2em;
+    padding-top: 2em;
 }
 
 #trick_main_image {
-  height: 400px;
-  text-align: right;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  border-style: solid;
-  border-color: #2C3E50;
-  border-width: 1px;
+    height: 400px;
+    text-align: right;
+    background-repeat: repeat;
+    background-position: center;
+    background-size: contain;
+    border-style: solid;
+    border-color: #2C3E50;
+    border-width: 1px;
 }
 
 #trick_content {
-  border-style: solid;
-  border-width: 1px;
-  padding-top: 1em;
-  padding-bottom: 1em;
-}
-
-#mainNav {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  font-weight: 700;
-  background-color: #2C3E50;
-}
-  
-#mainNav .navbar-brand {
-  color: #fff;
-  letter-spacing: 0.15rem;
-  font-size: 1.5em;
-}
-  
-#mainNav .navbar-nav {
-  margin-top: 1rem;
-  letter-spacing: 0.1rem;
-  font-size: 1.3em;
-}
-  
-#mainNav .navbar-nav li.nav-item a.nav-link {
-  color: #fff;
-}
-
-#mainNav .navbar-nav li.nav-item a.nav-link:hover {
-  color: #1e90ff;
-}
-
-#mainNav .navbar-nav li.nav-item a.nav-link:active, #mainNav .navbar-nav li.nav-item a.nav-link:focus {
-  color: #fff;
-}
-
-#mainNav .navbar-nav li.nav-item a.nav-link.active {
-  color: #1e90ff;
-}
-
-.figureName {
-  font-size: 68px;
-  font-weight: bold;
-}
-
-.trick-list {
-  margin-right: 5px;
-  margin-left: 5px;
-  margin-top: 25px;
-  margin-bottom: 5px;
-  display: inline-block;
-  /*border: 1px solid black;*/
-  width: 100%;
-  height: 150px;
-}
-
-.trick-li {
-   list-style: none;
-  /*display: inline-block;*/
-}
-
-.trick-ul {
-  list-style: none;
-}
-
-.trick-img {
-  max-width: 150px;
-  max-height: 120px;
-  padding-top: 5px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-.trick-img-thumbnail {
-  border: 1px solid black;
-  width: 100%;
-  height: 120px;
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-}
-
-#trick-sub-thumbnail {
-  border-left: 1px solid black;
-  border-right: 1px solid black;
-  border-bottom: 1px solid black;
-}
-
-.trick-img-buttons {
-  text-align: right;
-}
-
-.trick-video-thumbnails {
-  margin-top: 10px;
-  max-height: 100px;
-}
-
-.trick-btn {
-  padding-top: 10px;
-}
-
-.pictures-row{
-  padding-bottom: 20px;
-}
-
-#trick-edit-title {
-  height: 300px;
-  color: #1e90ff;
-}
-
-#trick-new-title {
-  color: #1e90ff;
-}
-
-ul {
-  padding-inline-start: 0px;
-}
-
-  header h1 {
-    padding-top: 1em;
-    padding-bottom: 1em;
-    font-size: 2em;
-    text-align: center;
-  }
-
-  .userbtn {
-    padding-right: 25px;
-  }
-
-
-
-  #figure_content {
     border-style: solid;
     border-width: 1px;
     padding-top: 1em;
     padding-bottom: 1em;
-  }
+}
 
-  .row-comment {
-    padding-bottom: 10px;
-  }
+#mainNav {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    font-weight: 700;
+    background-color: #2C3E50;
+}
+  
+#mainNav .navbar-brand {
+    color: #fff;
+    letter-spacing: 0.15rem;
+    font-size: 1.5em;
+}
+  
+#mainNav .navbar-nav {
+    margin-top: 1rem;
+    letter-spacing: 0.1rem;
+    font-size: 1.3em;
+}
+  
+#mainNav .navbar-nav li.nav-item a.nav-link {
+    color: #fff;
+}
 
-  h6 {
-    font-size: 12px;
-  }
-
-  .fa-edit, .fa-trash, .fa-star {
+#mainNav .navbar-nav li.nav-item a.nav-link:hover {
     color: #1e90ff;
-  }
+}
 
-  #img-home {
+#mainNav .navbar-nav li.nav-item a.nav-link:active, #mainNav .navbar-nav li.nav-item a.nav-link:focus {
+    color: #fff;
+}
+
+#mainNav .navbar-nav li.nav-item a.nav-link.active {
+    color: #1e90ff;
+}
+
+.figureName {
+    font-size: 68px;
+    font-weight: bold;
+}
+
+.trick-list {
+    margin-right: 5px;
+    margin-left: 5px;
+    margin-top: 25px;
+    margin-bottom: 5px;
+    display: inline-block;
+    width: 100%;
+    height: 150px;
+}
+
+.trick-li {
+    list-style: none;
+    /*display: inline-block;*/
+}
+
+.trick-ul {
+    list-style: none;
+}
+
+.trick-img {
+    max-width: 150px;
+    max-height: 120px;
+    padding-top: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.trick-img-thumbnail {
+    border: 1px solid black;
+    width: 100%;
+    height: 120px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+#trick-sub-thumbnail {
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.trick-img-buttons {
+    text-align: right;
+}
+
+.trick-video-thumbnails {
+    margin-top: 10px;
+    max-height: 100px;
+}
+
+.trick-btn {
+    padding-top: 10px;
+}
+
+.pictures-row{
+    padding-bottom: 20px;
+}
+
+#trick-edit-title {
+    height: 300px;
+    color: #1e90ff;
+}
+
+#trick-new-title {
+    color: #1e90ff;
+}
+
+ul {
+    padding-inline-start: 0px;
+}
+
+header h1 {
+    padding-top: 1em;
+    padding-bottom: 1em;
+    font-size: 2em;
+    text-align: center;
+}
+
+.userbtn {
+    padding-right: 25px;
+}
+
+
+
+#figure_content {
+    border-style: solid;
+    border-width: 1px;
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.row-comment {
+    padding-bottom: 10px;
+}
+
+h6 {
+    font-size: 12px;
+}
+
+.fa-edit, .fa-trash, .fa-star {
+    color: #1e90ff;
+}
+
+#img-home {
     background-image: url('/img/home.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     border-bottom: 2px solid black;
-  }
+}
 
-  #row-slogan {
+#row-slogan {
     height: 30em;
-  }
+}
 
-  #slogan-home {
+#slogan-home {
     color: darkred;
     font-size: 46px;
     font-weight: bold;
-  }
+}
+
+#proto-picture {
+    margin-bottom: -2em;
+}
+
+#proto-video {
+    margin-bottom: 1.5em;
+}

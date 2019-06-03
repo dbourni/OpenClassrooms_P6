@@ -65,10 +65,18 @@ class Figure
     private $createdAt;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="figure", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment",
+     *     mappedBy="figure",
+     *     orphanRemoval=true,
+     *     cascade={"persist", "remove"})
      * @ORM\OrderBy({"createdAt" = "DESC"})
      */
     private $comments;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $slug;
 
     public function __construct()
     {
@@ -234,6 +242,17 @@ class Figure
             }
         }
 
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
         return $this;
     }
 }
