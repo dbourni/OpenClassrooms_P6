@@ -21,7 +21,7 @@ class CommentFormType extends AbstractType
                     'placeholder' => 'Votre commentaire',
                     'style' => 'margin-right: 10px;',
                     'rows' => '2',
-                    'cols' => '70'
+                    'cols' => '60'
                 ]
             ])
             ->add('save', SubmitType::class, [

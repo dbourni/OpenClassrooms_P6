@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Figure;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
-class HomeController
+class HomeController extends AbstractController
 {
     /**
      * @Route("/")
@@ -15,7 +17,28 @@ class HomeController
      */
     public function home()
     {
-        return [];
+        return ['figures' => $this->getDoctrine()
+            ->getRepository(Figure::class)
+            ->findAll()]
+            ;
+    }
+
+    /**
+     * @param int $start
+     *
+     * @return array
+     *
+     * @Route("/morefigures/{start}")
+     *
+     * @Template()
+     */
+    public function moreFigures($start = 5)
+    {
+        return ['figures' => $this->getDoctrine()
+            ->getRepository(Figure::class)
+            ->findAll(),
+            'start' => $start]
+            ;
     }
 
     /**

@@ -27,7 +27,6 @@ class PictureFormType extends AbstractType
             ->add('isMainPicture', RadioType::class, [
                 'label' => false,
                 'attr' => [
-//                    'onClick' => 'selectMainPicture()',
                     'id' => 'mainImage',
                     'hidden' => true,
                 ]

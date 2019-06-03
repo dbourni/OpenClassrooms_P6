@@ -20,25 +20,25 @@
 //         newElem.appendTo(list);
 //     });
 // });
-var fileCount = '{{ form.pictures|length }}';
-
-function createAddFile(fileCount)
-{
-    // grab the prototype template
-    var newWidget = $("#picturesPrototype").attr('data-prototype');
-    // replace the "__name__" used in the id and name of the prototype
-    newWidget = newWidget.replace(/__name__/g, fileCount);
-
-    $("#picturesBox").append("<div class='row'>" + "<div class='col-md-10'>" + newWidget + "</div></div>");
-
-    // Once the file is added
-    $('#playground_cookiejarbundle_folder_documents_' + fileCount + '_file').on('change', function() {
-        // Create another instance of add file button and company
-        createAddFile(parseInt(fileCount)+1);
-    });
-}
-
-$(document).ready(function(){
-    createAddFile(fileCount);
-    fileCount++;
-});
+// var fileCount = '{{ form.pictures|length }}';
+//
+// function createAddFile(fileCount)
+// {
+//     // grab the prototype template
+//     var newWidget = $("#picturesPrototype").attr('data-prototype');
+//     // replace the "__name__" used in the id and name of the prototype
+//     newWidget = newWidget.replace(/__name__/g, fileCount);
+//
+//     $("#picturesBox").append("<div class='row'>" + "<div class='col-md-10'>" + newWidget + "</div></div>");
+//
+//     // Once the file is added
+//     $('#playground_cookiejarbundle_folder_documents_' + fileCount + '_file').on('change', function() {
+//         // Create another instance of add file button and company
+//         createAddFile(parseInt(fileCount)+1);
+//     });
+// }
+//
+// $(document).ready(function(){
+//     createAddFile(fileCount);
+//     fileCount++;
+// });

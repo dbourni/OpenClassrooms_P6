@@ -26,27 +26,12 @@ class Picture
     private $figure;
 
     /**
-     * @Assert\Image(
-     *  mimeTypes= {"image/jpeg", "image/jpg", "image/png"},
-     *  mimeTypesMessage = "Extension de fichier invalide",
-     *  minWidth = 500,
-     *  minWidthMessage = "Largeur trop petite",
-     *  maxWidth = 3000,
-     *  maxWidthMessage = "Largeur trop grande",
-     *  minHeight = 282,
-     *  minHeightMessage = "Hauteur trop petite",
-     *  maxHeight = 1687,
-     *  maxHeightMessage ="Hauteur trop grande",
-     *  )
-     *
      * @Assert\File(
      * maxSize = "1024k",
      * mimeTypes = {"image/png", "image/jpeg", "image/jpg"},
      * mimeTypesMessage = "Type de fichier invalide",
      * maxSizeMessage = "Fichier trop gros",
      * )
-     *
-     * @Assert\NotBlank()
      */
     private $file;
 
