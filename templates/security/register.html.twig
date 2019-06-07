@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="row justify-content-md-center">
+            <div class="col-md-5">
+                <div class="card">
+                    <h5 class="card-header"><i class="fa fa-lock"></i> Inscription</h5>
+                    <div class="card-body">
+                        <p class="card-text">Merci d'entrer vos informations d'inscription.</p>
+
+                        {{ form_start(registrationForm) }}
+                        {{ form_row(registrationForm.email) }}
+                        {{ form_row(registrationForm.plainPassword) }}
+                        <button class="btn btn-primary">Inscription</button>
+                        {{ form_end(registrationForm) }}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

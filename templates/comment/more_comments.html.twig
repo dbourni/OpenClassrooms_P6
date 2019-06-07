@@ -1,0 +1,17 @@
+    {% for comment in comments | reverse | slice(start,start+5)%}
+        <tr>
+            <td>{{ comment.createdAt | date("d/m/Y à H:m") }}</td>
+            <td>{{ comment.user.email }}</td>
+            <td>{{ comment.figure.name }}</td>
+                <td>
+                    <a href="{{ path('app_figure_view', {id:comment.figure.id}) }}" class="userbtn" target="_blank">
+                        <i class="far fa-eye"></i>
+                    </a>
+                    <a href="#" class="userbtn" data-toggle="modal"
+                       data-target="#deleteModal"
+                       data-path="{{ path('app_comment_delete', {id:comment.id}) }}">
+                        <i class="fas fa-trash-alt"></i>
+                    </a>
+                </td>
+        </tr>
+    {% endfor %}

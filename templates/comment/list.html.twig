@@ -1,0 +1,103 @@
+{% extends 'backoffice_base.html.twig' %}
+
+{% block content %}
+    <header>
+        <h1>Liste des commentaires</h1>
+    </header>
+
+    <div class="container">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Utilisateur</th>
+                    <th scope="col">Figure</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody id="comments">
+                    {% for comment in comments | reverse | slice(0,10)%}
+                        <tr>
+                            <td>{{ comment.createdAt | date("d/m/Y à H:m") }}</td>
+                            <td>{{ comment.user.email }}</td>
+                            <td>{{ comment.figure.name }}</td>
+                            <td>
+                                <a href="{{ path('app_figure_view', {id:comment.figure.id}) }}" class="userbtn" target="_blank">
+                                    <i class="far fa-eye"></i>
+                                </a>
+                                <a href="#" class="userbtn" data-toggle="modal"
+                                   data-target="#deleteModal"
+                                   data-path="{{ path('app_comment_delete', {id:comment.id}) }}">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="row justify-content-center">
+            <button class="btn btn-secondary" onclick="moreComments()">Plus de commentaires</button>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Supression d'un commentaire</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Confirmez-vous la suppression de ce commentaire ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <a href="delete" type="button" class="btn btn-primary">Supprimer</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    {{ parent() }}
+    <script>
+        $(function(){
+            $('#deleteModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var path = button.data('path');
+                var modal = $(this);
+                modal.find('a').attr("href",path);
+            })
+        })
+    </script>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        click = 0;
+        function moreComments() {
+            click++;
+            var start = click * 10;
+            var url = "{{ path('app_comment_morecomments')}}/" + start;
+
+            axios.get(url).then(function(response) {
+                $("#comments").append(response.data);
+            }).catch(function (error) {
+                if (response.status === 403) {
+                    window.alert("Vous n'êtes pas autorisé à effectuer cette action !");
+                }
+                else if (response.status === 404) {
+                    window.alert("La page n'existe pas");
+                }
+                else {
+                    window.alert("Une erreur est survenue !");
+                }
+            });
+        }
+    </script>
+{% endblock %}

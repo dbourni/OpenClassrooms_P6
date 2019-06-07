@@ -1,0 +1,188 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Figure {{ figure.name }}{% endblock %}
+
+{% block content %}
+    <main>
+        {# Main image #}
+        <div class="row justify-content-md-center">
+            {% set mainPicture = '/img/placeholder.jpg' %}
+            {% for picture in figure.pictures %}
+                {% if picture.isMainPicture == 1 %}
+                    {% set mainPicture = asset('uploads/' ~ picture.path) %}
+                {% endif %}
+            {% endfor %}
+            <div id="trick_main_image" class="col-lg-8" style="background-image: url({{ mainPicture }})">
+                {% if app.user %}
+                    <div class="row">
+                        <p class="col-12 align-text-top">
+                            <a href="{{ path('app_figure_edit', {id:figure.id}) }}"><i class="fas fa-edit"></i></a>
+                            <i class="fas fa-trash" data-toggle="modal" data-target="#deleteModal"></i>
+                        </p>
+                    </div>
+                {% endif %}
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-center align-items-center" id="trick-edit-title">
+                        <h1  class="figureName">{{ figure.name }}</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {# Pictures and videos #}
+        <div class="row justify-content-center">
+            <div class="col-lg-8" id="trick_content" >
+
+                <div class="row justify-content-center d-md-none" id="seeMedia">
+                    <p class="btn btn-primary">Voir les médias</p>
+                </div>
+
+                <div class="row justify-content-center pictures-row d-none d-md-block" id="trick-Media">
+                    <div class="col-12">
+                        <div class="row justify-content-center pictures-row">
+                            {% for picture in figure.pictures %}
+                                <div class="col-lg-2 col-md-3 col-sm-6 col-6 trick-list">
+                                    <div class="row justify-content-center" id="image">
+                                        <div class="col-12 trick-img-thumbnail" style="background-image: url('{{ asset('uploads/' ~ picture.path) }}')">
+                                        </div>
+                                    </div>
+                                    <div class="container row">
+                                        <a href="{{ asset('uploads/' ~ picture.path) }}" class="userbtn" target="_blank"><i class="far fa-eye"></i></a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            {% for video in figure.videos %}
+                                <div class="col-lg-2 col-md-3 col-sm-6 col-6 trick-list">
+                                    <div class="row justify-content-center"  id="video">
+                                        <div class="col-12 trick-img-thumbnail">
+                                            <div id="video_{{loop.index0}}"class="trick-video-thumbnails embed-responsive embed-responsive-16by9">
+                                                <iframe class="embed-responsive-item" src="{{ video.url }}" allowfullscreen></iframe>
+                                            </div>
+                                        </div>
+                                        <div class="container row">
+                                            <a href="{{ video.url }}" class="userbtn" target="_blank"><i class="far fa-eye"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                {# Trick fields #}
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        {{ figure.description|nl2br }}
+                        <p></p>
+                        <p class="text-center">
+                            <b>Groupe :</b> {{ figure.grp.name }} -
+                            <b>Date de création :</b> {{ figure.createdAt | date("d/m/Y") }} -
+                            <b>Créateur :</b> {{ figure.user.email | replace({'@': '(at)'}) }}</p>
+                        <hr>
+                    </div>
+                </div>
+
+                {# Add a comment #}
+                <div class="container">
+                    <div class="d-flex flex-row justify-content-center">
+                        <div class="col-10">
+                            {% if app.user %}
+                                {{ form_start(form, {'attr': {'class': 'form-inline'}}) }}
+                                {{ form_widget(form.content) }}
+                                {{ form_end(form) }}
+                            {% else %}
+                                <p>Veuillez vous connecter pour laisser un commentaire.</p>
+                            {% endif %}
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+
+                {# List of comments #}
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-8">
+                            <section id="comments">
+                                {% for comment in figure.comments | slice(0,5) %}
+                                    <div class="row row-comment">
+                                        <div class="col-1">
+                                            <i class="fas fa-user-edit fa-2x"></i>
+                                        </div>
+                                        <div class="col-11">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <h6 class="card-title">
+                                                        {{ comment.user.email | replace({'@': '(at)'}) }}
+                                                        a écrit le {{ comment.createdAt | date("d/m/Y à H:m") }}
+                                                    </h6>
+                                                    <p class="card-text">{{ comment.content|nl2br }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </section>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <button class="btn btn-secondary" onclick="moreComments()">Plus de commentaires</button>
+                    </div>
+                </div>
+    </main>
+
+    {# Modal for delete #}
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Supression d'une figure</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Confirmez-vous la suppression de la figure ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <a href="{{ path('app_figure_delete', {id:figure.id}) }}" type="button" class="btn btn-primary">Supprimer</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        $("#seeMedia").click(function() {
+            $("#trick-Media").removeClass("d-none d-md-block");
+            $("#seeMedia").hide();
+        });
+    </script>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        click = 0;
+        function moreComments() {
+            click++;
+            var start = click * 5;
+            var url = "{{ path('app_figure_morecomments', {'id': figure.id,} )}}/" + start;
+
+            axios.get(url).then(function(response) {
+                $("#comments").append(response.data);
+            }).catch(function (error) {
+                if (response.status === 403) {
+                    window.alert("Vous n'êtes pas autorisé à effectuer cette action !");
+                }
+                else if (response.status === 404) {
+                    window.alert("La page n'existe pas");
+                }
+                else {
+                    window.alert("Une erreur est survenue !");
+                }
+            });
+        }
+    </script>
+{% endblock %}

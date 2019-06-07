@@ -1,0 +1,147 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Snowtricks{% endblock %}
+
+{% block content %}
+    {# Main image #}
+    <div class="row" id="img-home">
+        <div class="col-12" >
+            <div class="row" id="row-slogan">
+                <div class="col-12 d-flex justify-content-center align-items-center">
+                    <div id="slogan-home">Le meilleur des Tricks !</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 d-flex justify-content-end">
+                    <a href="#trick_list"><i class="fa fa-arrow-down fa-2x" aria-hidden="true"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Displays the flash messages #}
+    <div class="container" id="container-alert">
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="row d-flex justify-content-center">
+                    <div class="alert-{{ label }} col-8 alert alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+
+    {# List of tricks #}
+    <div class="row  justify-content-center" id="trick_list">
+        <div class="col-10">
+            <div class="row justify-content-center pictures-row" id="figures">
+                {% for figure in figures | reverse | slice(0,5) %}
+                <div class="col-lg-2 col-md-3 col-sm-6 col-6 trick-list">
+                    <div class="row justify-content-center" id="image">
+                        {% set mainPicture = '/img/placeholder.jpg' %}
+                        {% for picture in figure.pictures %}
+                            {% if picture.isMainPicture == 1 %}
+                                {% set mainPicture = asset('uploads/' ~ picture.path) %}
+                            {% endif %}
+                            {% if mainPicture == '/img/placeholder.jpg' and loop.index0 == 0 and loop.length > 0 %}
+                                {% set mainPicture = asset('uploads/' ~ picture.path) %}
+                            {% endif %}
+                        {% endfor %}
+                        <div class="col-12 trick-img-thumbnail" style="background-image: url({{ mainPicture }})">
+                        </div>
+                    </div>
+                    <div class="row" id="trick-sub-thumbnail">
+                        <div class="col-9 d-flex">
+                            <a href="{{ path('app_figure_view', {id:figure.id, slug:figure.slug}) }}">{{ figure.name }}</a>
+                        </div>
+                        {% if app.user %}
+                            <div class="col-3 d-flex justify-content-end">
+                                <a href="{{ path('app_figure_edit', {id:figure.id}) }}"><i class="fas fa-edit"></i></a>
+                                <a href="#" data-toggle="modal" data-target="#deleteModal"
+                                   data-path="{{ path('app_figure_delete', {id:figure.id}) }}">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <button class="btn btn-secondary" onclick="moreTricks()">Plus de figures</button>
+    </div>
+
+    {# Displays the arrow if more than 15 tricks #}
+    {% if figures|length > 14  %}
+        <div class="row">
+            <div class="col-12 d-flex justify-content-end">
+                <a href="#trick_list"><i class="fa fa-arrow-up fa-2x" aria-hidden="true"></i></a>
+            </div>
+        </div>
+    {% endif %}
+
+    {# Modal for delete #}
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Supression d'une figure</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Confirmez-vous la suppression de la figure ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <a href="delete" type="button" class="btn btn-primary">Supprimer</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        click = 0;
+        function moreTricks() {
+            click++;
+            var start = click * 5;
+            var url = "{{ path('app_home_morefigures')}}/" + start;
+
+            axios.get(url).then(function(response) {
+                $("#figures").append(response.data);
+            }).catch(function (error) {
+                if (response.status === 403) {
+                    window.alert("Vous n'êtes pas autorisé à effectuer cette action !");
+                }
+                else if (response.status === 404) {
+                    window.alert("La page n'existe pas");
+                }
+                else {
+                    window.alert("Une erreur est survenue !");
+                }
+            });
+        }
+
+        $(function(){
+            $('#deleteModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var path = button.data('path');
+                var modal = $(this);
+                modal.find('a').attr("href",path);
+            })
+        })
+    </script>
+{% endblock %}
