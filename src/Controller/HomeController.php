@@ -11,6 +11,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     /**
+     * Displays the homepage
+     *
+     * @return array
+     *
      * @Route("/")
      *
      * @Template()
@@ -24,6 +28,8 @@ class HomeController extends AbstractController
     }
 
     /**
+     * Displays more figures on the homepage
+     *
      * @param int $start
      *
      * @return array
@@ -42,6 +48,10 @@ class HomeController extends AbstractController
     }
 
     /**
+     * Displays the backoffice
+     *
+     * @return array
+     *
      * @Route("/backoffice")
      *
      * @Template()

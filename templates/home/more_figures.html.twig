@@ -1,4 +1,4 @@
-{% for figure in figures | reverse | slice(start,start+15) %}
+{% for figure in figures | reverse | slice(start,start+5) %}
     <div class="col-lg-2 col-md-3 col-sm-4 trick-list">
         <div class="row justify-content-center" id="image">
             {% set mainPicture = '/img/placeholder.jpg' %}
@@ -12,7 +12,7 @@
         </div>
         <div class="row" id="trick-sub-thumbnail">
             <div class="col-9 d-flex">
-                <a href="{{ path('app_figure_view', {id:figure.id}) }}">{{ figure.name }}</a>
+                <a href="{{ path('app_figure_view', {id:figure.id, slug:figure.slug}) }}">{{ figure.name }}</a>
             </div>
             {% if app.user %}
                 <div class="col-3 d-flex justify-content-end">

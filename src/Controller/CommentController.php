@@ -35,7 +35,7 @@ class CommentController extends AbstractController
     }
 
     /**
-     * @param $id
+     * @param Comment $comment
      *
      * @return Response
      *

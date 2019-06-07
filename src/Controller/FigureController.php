@@ -28,6 +28,8 @@ use Symfony\Component\HttpFoundation\File\File;
 class FigureController extends AbstractController
 {
     /**
+     * @return array
+     *
      * @Route("/list")
      * 
      * @Template()
@@ -65,6 +67,7 @@ class FigureController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $figure->setUser($this->getUser());
             $figure->setCreatedAt(new \DateTime());
+            $figure->setSlug($this->slugify($figure->getName()));
             $entityManager->persist($figure);
             $entityManager->flush();
 
@@ -78,10 +81,11 @@ class FigureController extends AbstractController
 
     /**
      * @param Figure $figure
+     * @param Request $request
      *
      * @return array|Response
      *
-     * @Route("/view/{id}")
+     * @Route("/view/{id}/{slug}")
      *
      * @Template()
      */
@@ -99,14 +103,16 @@ class FigureController extends AbstractController
             $entityManager->persist($comment);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_figure_view', ['id' => $figure->getId()]);
+            return $this->redirectToRoute('app_figure_view', ['id' => $figure->getId(), 'slug' => $figure->getSlug()]);
         }
 
         return ['figure' => $figure, 'form' => $form->createView()];
     }
 
     /**
+     * @param Figure $figure
      * @param int $start
+     *
      * @return array
      *
      * @Route("/morecomments/{id}/{start}")
@@ -120,7 +126,7 @@ class FigureController extends AbstractController
 
     /**
      * @param Request $request
-     * @param $figure
+     * @param Figure $figure
      *
      * @return array|Response
      *
@@ -138,6 +144,7 @@ class FigureController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $figure->setSlug($this->slugify($figure->getName()));
             $entityManager->flush();
 
             $this->addFlash('success', 'La figure a été modifiée avec succès.');
@@ -148,7 +155,7 @@ class FigureController extends AbstractController
         return ['form' => $form->createView(), 'figure' => $figure];
     }
 
-      /**
+     /**
      * @return string
      */
     private function generateUniqueFileName()
@@ -174,5 +181,19 @@ class FigureController extends AbstractController
         $this->addFlash('success', 'La figure a été supprimée avec succès.');
 
         return $this->redirectToRoute('app_home_home');
+    }
+
+    /**
+     * Slugifies a text for example a path
+     *
+     * @param $text
+     *
+     * @return string|null
+     */
+    public function slugify($text)
+    {
+        $cleanText = preg_replace('/\W+/', '-', $text);
+        $cleanText = strtolower(trim($cleanText, '-'));
+        return $cleanText;
     }
 }

@@ -15,9 +15,18 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
+/**
+ * Class SecurityController
+ * @package App\Controller
+ */
 class SecurityController extends AbstractController
 {
     /**
+     * @param Request $request
+     * @param AuthenticationUtils $authenticationUtils
+     *
+     * @return array
+     *
      * @Route("/login")
      *
      * @Template()
@@ -45,6 +54,14 @@ class SecurityController extends AbstractController
     }
 
     /**
+     * User registration
+     *
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $passwordEncoder
+     * @param \Swift_Mailer $mailer
+     *
+     * @return array | Response
+     *
      * @Route("/register")
      *
      * @Template()
@@ -95,6 +112,8 @@ class SecurityController extends AbstractController
      *
      * @param Request $request
      *
+     * @return Response
+     *
      * @Route("/registerValidation")
      */
     public function registerValidation(Request $request)
@@ -117,6 +136,11 @@ class SecurityController extends AbstractController
 
     /**
      * Reset the password
+     *
+     * @param Request $request
+     * @param \Swift_Mailer $mailer
+     *
+     * @return array | Response
      *
      * @Route("/resetPassword")
      *
@@ -166,6 +190,11 @@ class SecurityController extends AbstractController
 
     /**
      * Set the new passwords
+     *
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $passwordEncoder
+     *
+     * @return array | Response
      *
      * @Route("/newPassword")
      *

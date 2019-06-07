@@ -21,7 +21,7 @@
                         <td>{{ figure.name }}</td>
                         <td>{{ figure.grp.name }}</td>
                         <td>
-                            <a href="{{ path('app_figure_view', {id:figure.id}) }}" class="userbtn"><i class="far fa-eye"></i></a>
+                            <a href="{{ path('app_figure_view', {id:figure.id, slug:figure.slug}) }}" class="userbtn"><i class="far fa-eye"></i></a>
                             <a href="{{ path('app_figure_edit', {id:figure.id}) }}" class="userbtn"><i class="fas fa-edit"></i></a>
                             <a href="#" class="userbtn" data-toggle="modal" data-target="#deleteModal" data-path="{{ path('app_figure_delete', {id:figure.id}) }}"><i class="fas fa-trash-alt"></i></a>
                         </td>

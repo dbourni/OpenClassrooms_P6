@@ -12,7 +12,7 @@
                     {% set mainPicture = asset('uploads/' ~ picture.path) %}
                 {% endif %}
             {% endfor %}
-            <div id="trick_main_image" class="col-lg-8" style="background: url({{ mainPicture }}) center">
+            <div id="trick_main_image" class="col-lg-8" style="background-image: url({{ mainPicture }})">
                 {% if app.user %}
                     <div class="row">
                         <p class="col-12 align-text-top">
@@ -72,7 +72,7 @@
                 {# Trick fields #}
                 <div class="row justify-content-center">
                     <div class="col-lg-10">
-                        {{ figure.description }}
+                        {{ figure.description|nl2br }}
                         <p></p>
                         <p class="text-center">
                             <b>Groupe :</b> {{ figure.grp.name }} -
@@ -115,7 +115,7 @@
                                                         {{ comment.user.email | replace({'@': '(at)'}) }}
                                                         a écrit le {{ comment.createdAt | date("d/m/Y à H:m") }}
                                                     </h6>
-                                                    <p class="card-text">{{ comment.content|raw }}</p>
+                                                    <p class="card-text">{{ comment.content|nl2br }}</p>
                                                 </div>
                                             </div>
                                         </div>

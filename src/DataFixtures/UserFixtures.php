@@ -10,7 +10,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class UserFixtures extends Fixture
 {
     private $passwordEncoder;
-    public const USER_DBOURNI = 'david@bournisien.net';
+    public const USER_ADMIN = 'admin@admin.com';
 
     public function __construct(UserPasswordEncoderInterface $passwordEncoder)
     {
@@ -26,8 +26,8 @@ class UserFixtures extends Fixture
             $user->setRoles($roles);
             $manager->persist($user);
 
-            if ($email == 'david@bournisien.net') {
-                $this->addReference(self::USER_DBOURNI, $user);
+            if ($email == 'admin@admin.com') {
+                $this->addReference(self::USER_ADMIN, $user);
             }
         }
 
@@ -37,8 +37,7 @@ class UserFixtures extends Fixture
     private function getUserData(): array
     {
         return [
-            // $userData = [$password, $email, $roles];
-            ['evdbevdb', 'david@bournisien.net', ['ROLE_ADMIN']],
+            // [$password, $email, $roles];
             ['admin', 'admin@admin.com', ['ROLE_ADMIN']],
             ['user', 'user@user.com', ['ROLE_REGISTERED_USER']],
         ];
